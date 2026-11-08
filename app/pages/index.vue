@@ -29,8 +29,6 @@ const copy = {
   signsTitle: { pl: '12 znaków zodiaku', de: 'Die 12 Sternzeichen' },
   signsAll: { pl: 'Wszystkie znaki', de: 'Alle Sternzeichen' },
   braceletsTitle: { pl: 'Bransoletki zodiakalne', de: 'Sternzeichen-Armbänder' },
-  stonesTitle: { pl: 'Przewodnik po kamieniach', de: 'Steine im Überblick' },
-  stonesAll: { pl: 'Wszystkie kamienie', de: 'Alle Steine' },
   faqTitle: { pl: 'Najczęstsze pytania', de: 'Häufige Fragen' },
   usp: {
     pl: [
@@ -152,14 +150,6 @@ useHead(() => ({
       <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
         <ProductCard v-for="(node, i) in zodiacBracelets" :key="node.databaseId" :node="node" :index="i" />
       </div>
-    </section>
-
-    <section class="container my-16" aria-labelledby="stones-title">
-      <div class="flex items-end justify-between mb-6">
-        <h2 id="stones-title" class="text-2xl font-semibold">{{ t(copy.stonesTitle) }}</h2>
-        <NuxtLink class="text-primary-dark" :to="marketConfig.paths.stones">{{ t(copy.stonesAll) }}</NuxtLink>
-      </div>
-      <StoneGuide />
     </section>
 
     <section class="container grid gap-4 my-16 md:grid-cols-2 lg:grid-cols-4">

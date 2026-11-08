@@ -1,7 +1,6 @@
 <script setup lang="ts">
-// Overrides woonuxt_base MainMenu: adds the zodiac and stone landing pages.
-const { navigateToLogin } = useAuth();
-const route = useRoute();
+// Overrides woonuxt_base MainMenu: zodiac and stone landing pages first.
+// Shown permanently in the header (see AppHeader override), so no mobile-only links here.
 const { marketConfig, t } = useSignor();
 
 const labels = {
@@ -13,12 +12,10 @@ const labels = {
 
 <template>
   <nav>
-    <NuxtLink :to="marketConfig.paths.zodiac">{{ t(labels.zodiac) }}</NuxtLink>
-    <NuxtLink :to="marketConfig.paths.stones">{{ t(labels.stones) }}</NuxtLink>
-    <NuxtLink to="/products">{{ t(labels.all) }}</NuxtLink>
-    <NuxtLink to="/categories">{{ $t('shop.category', 2) }}</NuxtLink>
-    <NuxtLink to="/contact">{{ $t('general.contact') }}</NuxtLink>
-    <NuxtLink class="lg:hidden" to="/wishlist" :prefetch="false">{{ $t('shop.wishlist') }}</NuxtLink>
-    <NuxtLink class="lg:hidden" to="/my-account" :prefetch="false" @click="navigateToLogin(route.fullPath)">{{ $t('account.myAccount') }}</NuxtLink>
+    <NuxtLink active-class="text-gray-900 font-semibold" :to="marketConfig.paths.zodiac">{{ t(labels.zodiac) }}</NuxtLink>
+    <NuxtLink active-class="text-gray-900 font-semibold" :to="marketConfig.paths.stones">{{ t(labels.stones) }}</NuxtLink>
+    <NuxtLink active-class="text-gray-900 font-semibold" to="/products">{{ t(labels.all) }}</NuxtLink>
+    <NuxtLink active-class="text-gray-900 font-semibold" to="/categories">{{ $t('shop.category', 2) }}</NuxtLink>
+    <NuxtLink active-class="text-gray-900 font-semibold" to="/contact">{{ $t('general.contact') }}</NuxtLink>
   </nav>
 </template>

@@ -1,0 +1,23 @@
+fragment CommentFields on Comment {
+  id
+  parentId
+  content
+  date
+  author {
+    node {
+      name
+      avatar {
+        url
+      }
+    }
+  }
+}
+
+fragment Comment on Comment {
+  ...CommentFields
+  replies {
+    nodes {
+      ...CommentFields
+    }
+  }
+}

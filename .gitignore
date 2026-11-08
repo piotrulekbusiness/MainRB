@@ -1,0 +1,40 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+.github/
+
+# Node dependencies
+node_modules
+
+# Generated from each developer's configured GraphQL endpoint
+woonuxt_base/app/gql/default.ts
+woonuxt_base/app/gql/schema.ts
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# vscode config
+.vscode
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Local Netlify folder
+.netlify
+.vercel
+
+*.pem
+
+woonuxt-settings

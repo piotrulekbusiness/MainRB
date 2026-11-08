@@ -1,0 +1,23 @@
+fragment ExternalProduct on ExternalProduct {
+  externalUrl
+  buttonText
+  ...ProductPricing
+  image {
+    sourceUrl
+    altText
+    title
+    databaseId
+    mediaDetails {
+      width
+      height
+    }
+    cartSourceUrl: sourceUrl(size: THUMBNAIL)
+    productCardSourceUrl: sourceUrl(size: WOOCOMMERCE_THUMBNAIL)
+  }
+  galleryImages(first: 20) {
+    nodes {
+      ...Image
+      databaseId
+    }
+  }
+}

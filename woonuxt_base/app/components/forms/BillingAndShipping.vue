@@ -1,0 +1,337 @@
+<template>
+  <div>
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="mb-2 text-3xl font-bold text-gray-900">Billing & Shipping</h1>
+      <p class="text-gray-600">Manage your billing and shipping addresses for orders and deliveries</p>
+    </div>
+
+    <form class="space-y-6 wn-form" @submit.prevent="saveChanges">
+      <!-- Billing Address Card -->
+      <div class="bg-white border border-gray-100 rounded-lg shadow-xs">
+        <div class="p-6 pb-4 border-b border-gray-100 md:px-8">
+          <h3 class="text-lg font-semibold text-gray-900">Billing Address</h3>
+        </div>
+        <!-- Billing Fields -->
+        <div v-if="customer.billing" class="grid gap-6 p-6 md:p-8 md:grid-cols-2">
+          <div class="w-full space-y-2">
+            <label for="billing-first-name" class="block text-sm font-medium text-gray-700">{{ $t('billing.firstName') }}</label>
+            <input
+              id="billing-first-name"
+              v-model="customer.billing.firstName"
+              placeholder="John"
+              name="billing-first-name"
+              autocomplete="section-billing billing given-name"
+              type="text"
+              autocapitalize="words"
+              required />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="billing-last-name" class="block text-sm font-medium text-gray-700">{{ $t('billing.lastName') }}</label>
+            <input
+              id="billing-last-name"
+              v-model="customer.billing.lastName"
+              placeholder="Doe"
+              name="billing-last-name"
+              autocomplete="section-billing billing family-name"
+              type="text"
+              autocapitalize="words"
+              required />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="billing-phone" class="block text-sm font-medium text-gray-700">
+              {{ $t('billing.phone') }}
+            </label>
+            <input
+              id="billing-phone"
+              v-model="customer.billing.phone"
+              placeholder="+1 234 567 8901"
+              name="billing-phone"
+              autocomplete="section-billing billing tel"
+              type="tel"
+              inputmode="tel" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="billing-company" class="block text-sm font-medium text-gray-700"
+              >Company <span class="font-normal text-gray-400">({{ $t('general.optional') }})</span></label
+            >
+            <input
+              id="billing-company"
+              v-model="customer.billing.company"
+              placeholder="Company Name"
+              name="billing-company"
+              autocomplete="section-billing billing organization"
+              type="text"
+              autocapitalize="words" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="billing-address" class="block text-sm font-medium text-gray-700">{{ $t('billing.address1') }}</label>
+            <input
+              id="billing-address"
+              v-model="customer.billing.address1"
+              placeholder="123 Main St"
+              name="billing-address"
+              autocomplete="section-billing billing address-line1"
+              type="text"
+              autocapitalize="words" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="billing-address-2" class="block text-sm font-medium text-gray-700"
+              >{{ $t('billing.address2') }} <span class="font-normal text-gray-400">({{ $t('general.optional') }})</span></label
+            >
+            <input
+              id="billing-address-2"
+              v-model="customer.billing.address2"
+              placeholder="Apartment, studio, or floor"
+              name="billing-address-2"
+              autocomplete="section-billing billing address-line2"
+              type="text"
+              autocapitalize="words" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="billing-city" class="block text-sm font-medium text-gray-700">{{ $t('billing.city') }}</label>
+            <input
+              id="billing-city"
+              v-model="customer.billing.city"
+              placeholder="New York"
+              name="billing-city"
+              autocomplete="section-billing billing address-level2"
+              type="text"
+              autocapitalize="words" />
+          </div>
+
+          <div v-if="customer.billing.state && customer.billing.country" class="w-full space-y-2">
+            <label for="billing-state" class="block text-sm font-medium text-gray-700"
+              >{{ $t('billing.state') }} <span class="font-normal text-gray-400">({{ $t('general.optional') }})</span></label
+            >
+            <StateSelect
+              id="billing-state"
+              v-model="customer.billing.state"
+              name="billing-state"
+              :default-value="customer.billing.state"
+              :country-code="customer.billing.country"
+              :autocomplete="'section-billing billing address-level1'" />
+          </div>
+
+          <div v-if="customer.billing.country" class="w-full space-y-2">
+            <label for="billing-country" class="block text-sm font-medium text-gray-700">{{ $t('billing.country') }}</label>
+            <CountrySelect
+              id="billing-country"
+              v-model="customer.billing.country"
+              name="billing-country"
+              :default-value="customer.billing.country"
+              :autocomplete="'section-billing billing country'" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="billing-zip" class="block text-sm font-medium text-gray-700">{{ $t('billing.zip') }}</label>
+            <input
+              id="billing-zip"
+              v-model="customer.billing.postcode"
+              placeholder="10001"
+              name="billing-zip"
+              autocomplete="section-billing billing postal-code"
+              type="text"
+              autocapitalize="characters" />
+          </div>
+
+          <div class="w-full space-y-2 col-span-full">
+            <label for="billing-email" class="block text-sm font-medium text-gray-700">
+              {{ $t('billing.email') }}
+            </label>
+            <input
+              id="billing-email"
+              v-model="customer.billing.email"
+              placeholder="johndoe@email.com"
+              name="billing-email"
+              autocomplete="section-billing billing email"
+              type="email"
+              inputmode="email"
+              autocapitalize="none"
+              required />
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping Address Card -->
+      <div class="bg-white border border-gray-100 rounded-lg shadow-xs">
+        <div class="p-6 pb-4 border-b border-gray-100 md:px-8">
+          <h3 class="text-lg font-semibold text-gray-900">Shipping Address</h3>
+        </div>
+        <!-- Shipping Fields -->
+        <div v-if="customer.shipping" class="grid gap-6 p-6 md:p-8 md:grid-cols-2">
+          <div class="w-full space-y-2">
+            <label for="shipping-first-name" class="block text-sm font-medium text-gray-700">{{ $t('billing.firstName') }}</label>
+            <input
+              id="shipping-first-name"
+              v-model="customer.shipping.firstName"
+              placeholder="John"
+              name="shipping-first-name"
+              autocomplete="section-shipping shipping given-name"
+              type="text"
+              autocapitalize="words"
+              required />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="shipping-last-name" class="block text-sm font-medium text-gray-700">{{ $t('billing.lastName') }}</label>
+            <input
+              id="shipping-last-name"
+              v-model="customer.shipping.lastName"
+              placeholder="Doe"
+              name="shipping-last-name"
+              autocomplete="section-shipping shipping family-name"
+              type="text"
+              autocapitalize="words"
+              required />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="shipping-phone" class="block text-sm font-medium text-gray-700">
+              {{ $t('billing.phone') }}
+            </label>
+            <input
+              id="shipping-phone"
+              v-model="customer.shipping.phone"
+              placeholder="+1 234 567 8901"
+              name="shipping-phone"
+              autocomplete="section-shipping shipping tel"
+              type="tel"
+              inputmode="tel" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="shipping-company" class="block text-sm font-medium text-gray-700"
+              >Company <span class="font-normal text-gray-400">({{ $t('general.optional') }})</span></label
+            >
+            <input
+              id="shipping-company"
+              v-model="customer.shipping.company"
+              placeholder="Company Name"
+              name="shipping-company"
+              autocomplete="section-shipping shipping organization"
+              type="text"
+              autocapitalize="words" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="shipping-address" class="block text-sm font-medium text-gray-700">{{ $t('billing.address1') }}</label>
+            <input
+              id="shipping-address"
+              v-model="customer.shipping.address1"
+              placeholder="O'Connell Street 47"
+              name="shipping-address"
+              autocomplete="section-shipping shipping address-line1"
+              type="text"
+              autocapitalize="words" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="shipping-address-2" class="block text-sm font-medium text-gray-700"
+              >{{ $t('billing.address2') }} <span class="font-normal text-gray-400">({{ $t('general.optional') }})</span></label
+            >
+            <input
+              id="shipping-address-2"
+              v-model="customer.shipping.address2"
+              placeholder="Apartment, studio, or floor"
+              name="shipping-address-2"
+              autocomplete="section-shipping shipping address-line2"
+              type="text"
+              autocapitalize="words" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="shipping-city" class="block text-sm font-medium text-gray-700">{{ $t('billing.city') }}</label>
+            <input
+              id="shipping-city"
+              v-model="customer.shipping.city"
+              placeholder="New York"
+              name="shipping-city"
+              autocomplete="section-shipping shipping address-level2"
+              type="text"
+              autocapitalize="words" />
+          </div>
+
+          <div v-if="customer.shipping.state && customer.shipping.country" class="w-full space-y-2">
+            <label for="shipping-state" class="block text-sm font-medium text-gray-700"
+              >{{ $t('billing.state') }} <span class="font-normal text-gray-400">({{ $t('general.optional') }})</span></label
+            >
+            <StateSelect
+              id="shipping-state"
+              v-model="customer.shipping.state"
+              name="shipping-state"
+              :default-value="customer.shipping.state"
+              :country-code="customer.shipping.country"
+              :autocomplete="'section-shipping shipping address-level1'" />
+          </div>
+
+          <div v-if="customer.shipping.country" class="w-full space-y-2">
+            <label for="shipping-country" class="block text-sm font-medium text-gray-700">{{ $t('billing.country') }}</label>
+            <CountrySelect
+              id="shipping-country"
+              v-model="customer.shipping.country"
+              name="shipping-country"
+              :default-value="customer.shipping?.country"
+              :autocomplete="'section-shipping shipping country'" />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label for="shipping-zip" class="block text-sm font-medium text-gray-700">{{ $t('billing.zip') }}</label>
+            <input
+              id="shipping-zip"
+              v-model="customer.shipping.postcode"
+              placeholder="10001"
+              name="shipping-zip"
+              autocomplete="section-shipping shipping postal-code"
+              type="text"
+              autocapitalize="characters" />
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="p-6 pt-4 border-t flex border-gray-100 rounded-b-lg bg-gray-50">
+          <Button :loading="loading" type="submit" class="ml-auto" :class="button.color">
+            {{ button.text }}
+          </Button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script setup lang="ts">
+const { viewer, customer } = useAuth();
+const { t } = useI18n();
+const gql = useWooGraphQL();
+
+const loading = ref<boolean>(false);
+const button = ref<{ text: string; color: string }>({ text: t('account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' });
+
+async function saveChanges(): Promise<void> {
+  if (!viewer.value?.id) return;
+
+  loading.value = true;
+  button.value.text = t('account.updating');
+  const shipping = customer.value.shipping;
+  const billing = customer.value.billing;
+
+  try {
+    const { updateCustomer } = await gql.UpdateCustomer({ input: { id: viewer.value.id, shipping, billing } });
+    if (updateCustomer) button.value = { text: t('account.updateSuccess'), color: 'bg-green-500' };
+  } catch {
+    button.value = { text: t('account.failed'), color: 'bg-red-500' };
+  }
+
+  loading.value = false;
+
+  setTimeout(() => {
+    button.value = { text: t('account.updateDetails'), color: 'bg-primary hover:bg-primary-dark' };
+  }, 2000);
+}
+</script>

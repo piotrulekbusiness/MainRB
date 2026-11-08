@@ -1,0 +1,10 @@
+fragment Image on MediaItem {
+  sourceUrl
+  altText
+  title
+  databaseId
+  mediaDetails {
+    width
+    height
+  }
+}

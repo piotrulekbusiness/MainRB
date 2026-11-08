@@ -13,7 +13,11 @@
 
 /** Fill in from the WordPress export / Search Console. Keys and values without trailing slash. */
 export const EXACT_REDIRECTS: Record<string, string> = {
-  // '/kategoria-produktu/bransoletki/z-kamieni/znaki-zodiaku': '/znaki-zodiaku',
+  // Products published without a title, so WordPress gave them a placeholder slug.
+  '/produkt/brak-tytulu': '/product/bransoletka-regulowana-zodiak-panna',
+  '/product/brak-tytulu': '/product/bransoletka-regulowana-zodiak-panna',
+  '/produkt/brak-tytulu-2': '/product/bransoletka-regulowana-zodiak-lew',
+  '/product/brak-tytulu-2': '/product/bransoletka-regulowana-zodiak-lew',
 };
 
 /** Misspellings found in current product URLs. Applied to whole path segments, globally. */

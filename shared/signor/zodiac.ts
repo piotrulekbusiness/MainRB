@@ -3,13 +3,11 @@ import type { Localized, Market } from './store';
 /**
  * The 12 zodiac signs and the bracelet stone assigned to each in the shop.
  *
- * Confirmed in the PL shop (119 zł, previously 139 zł): Aries–tourmaline,
- * Taurus–lapis lazuli, Gemini–tiger's eye, Cancer–opal, Leo–onyx, Virgo–jasper,
- * Scorpio–hematite.
- *
- * Libra, Sagittarius, Capricorn, Aquarius and Pisces: stone not confirmed yet
- * (`stoneId: null`). Their pages still list whatever products match the sign name,
- * and show no stone until the data is filled in here.
+ * Taken from the product descriptions in the PL shop (both lines, "BRANSOLETKA
+ * ZODIAKI" and "BRANSOLETKA REGULOWANA ZODIAK", 119 zł, previously 139 zł):
+ * Aries–tourmaline, Taurus–lapis lazuli, Gemini–tiger's eye, Cancer–opal, Leo–onyx,
+ * Virgo–jasper, Libra–citrine, Scorpio–hematite, Sagittarius–amethyst,
+ * Capricorn–garnet, Aquarius–turquoise, Pisces–aquamarine.
  *
  * Prices are intentionally NOT stored here: the frontend always shows the live price
  * from WooCommerce.
@@ -117,7 +115,7 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
     from: [9, 23],
     to: [10, 22],
     element: 'air',
-    stoneId: null, // TODO: check in the shop
+    stoneId: 'cytryn',
     match: { pl: ['\\bwag[ia]?\\b'], de: ['\\bwaage'] },
   },
   {
@@ -141,7 +139,7 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
     from: [11, 22],
     to: [12, 21],
     element: 'fire',
-    stoneId: null, // TODO: check in the shop
+    stoneId: 'ametyst',
     match: { pl: ['\\bstrzel'], de: ['\\bschutze', '\\bschuetze'] },
   },
   {
@@ -153,7 +151,7 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
     from: [12, 22],
     to: [1, 19],
     element: 'earth',
-    stoneId: null, // TODO: check in the shop
+    stoneId: 'granat',
     match: { pl: ['\\bkozioro'], de: ['\\bsteinbock'] },
   },
   {
@@ -165,7 +163,7 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
     from: [1, 20],
     to: [2, 18],
     element: 'air',
-    stoneId: null, // TODO: check in the shop
+    stoneId: 'turkus',
     match: { pl: ['\\bwodni'], de: ['\\bwassermann'] },
   },
   {
@@ -177,7 +175,7 @@ export const ZODIAC_SIGNS: ZodiacSign[] = [
     from: [2, 19],
     to: [3, 20],
     element: 'water',
-    stoneId: null, // TODO: check in the shop
+    stoneId: 'akwamaryn',
     match: { pl: ['\\bryb'], de: ['\\bfisch'] },
   },
 ];

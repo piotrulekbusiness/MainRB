@@ -44,7 +44,7 @@ SIGNOR_ORIGIN=https://signorstore.pl   # opcjonalne, domyślnie wynika ze STORE_
 
 ## Kroki w WordPressie
 
-1. **Wtyczki:** zainstaluj „Settings for WooNuxt” i w Ustawienia → WooNuxt doinstaluj WPGraphQL, WPGraphQL WooCommerce (wp-graphql-woocommerce) oraz WPGraphQL CORS. W ustawieniach CORS dopuść domenę frontendu.
+1. **Wtyczki:** sklep nie ma dziś WPGraphQL (`/graphql` zwraca 404), a bez niego WooNuxt nie działa. Zainstaluj „Settings for WooNuxt” i w Ustawienia → WooNuxt doinstaluj WPGraphQL, WPGraphQL WooCommerce (wp-graphql-woocommerce) oraz WPGraphQL CORS. W ustawieniach CORS dopuść domenę frontendu.
 2. **Kategoria „Znaki zodiaku”:** Produkty → Kategorie → dodaj „Znaki zodiaku” ze slugiem `znaki-zodiaku` (w DE: „Sternzeichen”, `sternzeichen`). Przypisz do niej wszystkie bransoletki zodiakalne. Mogą zostać także w „Bransoletki > Z kamieni”. Strony znaków pokazują produkty z tej kategorii jako pierwsze.
 3. **Opis kategorii:** usuń zdublowany opis z „Z kamieni” (ten sam tekst jest teraz w kategorii nadrzędnej i podrzędnej).
 4. **Literówki w slugach:** `bash scripts/wp/fix-typo-slugs.sh` (podgląd), potem `--apply`. Rób to razem z wdrożeniem frontendu, bo dopiero frontend przekierowuje stare adresy.
@@ -77,7 +77,9 @@ Używamy wyłącznie zdjęć ze sklepu (`wp-content/uploads`), pobieranych przez
 
 ## Otwarte kwestie
 
-- **Kamienie dla Wagi, Strzelca, Koziorożca, Wodnika i Ryb:** brak danych. Uzupełnij `stoneId` w `shared/signor/zodiac.ts` (i ewentualnie nowy kamień w `stones.ts`). Do tego czasu te strony pokazują produkty pasujące nazwą do znaku, bez kamienia.
+- **Kamienie znaków:** wszystkie 12 uzupełnione na podstawie opisów produktów w sklepie (Waga – cytryn, Strzelec – ametyst, Koziorożec – granat, Wodnik – turkus, Ryby – akwamaryn).
+- **Bransoletki zodiakalne w sklepie:** każdy znak ma dwa produkty: „BRANSOLETKA ZODIAKI” (warianty S/M/L) i „BRANSOLETKA REGULOWANA ZODIAK” (regulowany sznurek). Strona znaku pokazuje oba.
+- **Adresy do poprawy w WordPressie:** Panna i Lew (wersja regulowana) mają slugi `brak-tytulu` i `brak-tytulu-2`, a w adresach i tytułach są literówki (`barnsoletka-meska-lapis-lazuli`, `brasnoletka-z-onyksu-patyczki`, `...-z-tumrmalinem-...`). Poprawia je `scripts/wp/fix-typo-slugs.sh`, przekierowania 301 są już w `shared/signor/redirects.ts`.
 - **Przypisanie produktu do znaku:** dziś odbywa się po nazwie lub slugu produktu (np. „Bliźnięta”, „Lew”). Po uporządkowaniu slugów najlepiej wpisać dokładny `productSlug` dla każdego znaku.
 - **Grawer (do 10 znaków), gwarancja +19,90 zł, kartka +8,90 zł:** WooNuxt nie obsługuje dodatków produktowych. Zależy to od wtyczki dodatków w sklepie (np. WooCommerce Product Add-Ons, YITH, TM Extra Product Options). Każda z nich wymaga rozszerzenia schematu WPGraphQL i pola w karcie produktu. Najprostsza alternatywa: gwarancja i kartka jako osobne, tanie produkty dodawane z koszyka, a grawer jako wariant z polem tekstowym.
 - **Ceny dodatków w DE:** nieznane, dlatego niemieckie FAQ ich nie podaje.

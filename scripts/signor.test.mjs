@@ -29,9 +29,22 @@ test('every day of the year maps to exactly one sign', () => {
   }
 });
 
-test('confirmed stones are assigned; unconfirmed signs have none', () => {
-  const expected = { aries: 'turmalin', taurus: 'lapis-lazuli', gemini: 'tygrysie-oko', cancer: 'opal', leo: 'onyks', virgo: 'jaspis', scorpio: 'hematyt' };
-  for (const s of ZODIAC_SIGNS) assert.equal(s.stoneId, expected[s.id] ?? null, s.id);
+test('every sign has the stone used in the shop', () => {
+  const expected = {
+    aries: 'turmalin',
+    taurus: 'lapis-lazuli',
+    gemini: 'tygrysie-oko',
+    cancer: 'opal',
+    leo: 'onyks',
+    virgo: 'jaspis',
+    libra: 'cytryn',
+    scorpio: 'hematyt',
+    sagittarius: 'ametyst',
+    capricorn: 'granat',
+    aquarius: 'turkus',
+    pisces: 'akwamaryn',
+  };
+  for (const s of ZODIAC_SIGNS) assert.equal(s.stoneId, expected[s.id], s.id);
   for (const id of Object.values(expected))
     assert.ok(
       STONES.some((stone) => stone.id === id),
@@ -51,6 +64,27 @@ test('product name matching by sign (PL/DE) without false positives', () => {
   assert.ok(productMatchesStems(['hamatit', 'haematit'], { name: 'Armband Hämatit' }));
 });
 
+test('real shop product names match their sign', () => {
+  const real = {
+    aries: 'BRANSOLETKA ZODIAKI: BARAN',
+    gemini: 'BRANSOLETKA REGULOWANA ZODIAK: BLIŹNIĘTA',
+    cancer: 'BRANSOLETKA ZODIAKI: RAK',
+    leo: 'BRANSOLETKA REGULOWANA ZODIAK: LEW',
+    virgo: 'BRANSOLETKA ZODIAKI: PANNA',
+    libra: 'BRANSOLETKA REGULOWANA ZODIAK: WAGA',
+    capricorn: 'BRANSOLETKA ZODIAKI: KOZIOROŻEC',
+    pisces: 'BRANSOLETKA ZODIAKI: RYBY',
+  };
+  for (const [id, name] of Object.entries(real)) {
+    const matches = ZODIAC_SIGNS.filter((s) => productMatchesSign('pl', s, { name }));
+    assert.deepEqual(
+      matches.map((s) => s.id),
+      [id],
+      name,
+    );
+  }
+});
+
 test('legacy redirects: typos, WP permalink bases, single hop', () => {
   assert.equal(resolveLegacyRedirect('/product/barnsoletka-baran-z-tumrmalinem'), '/product/bransoletka-baran-z-turmalinem');
   assert.equal(resolveLegacyRedirect('/produkt/brasnoletka-lew-onyks/'), '/product/bransoletka-lew-onyks');
@@ -61,6 +95,12 @@ test('legacy redirects: typos, WP permalink bases, single hop', () => {
   assert.equal(resolveLegacyRedirect('/product/bransoletka-lew-onyks'), null);
   assert.equal(resolveLegacyRedirect('/product-category/z-kamieni'), null);
   assert.equal(resolveLegacyRedirect('/znaki-zodiaku/baran'), null);
+  assert.equal(resolveLegacyRedirect('/produkt/brak-tytulu/'), '/product/bransoletka-regulowana-zodiak-panna');
+  assert.equal(resolveLegacyRedirect('/produkt/brak-tytulu-2/'), '/product/bransoletka-regulowana-zodiak-lew');
+  assert.equal(
+    resolveLegacyRedirect('/produkt/regulowana-bransoletka-z-tumrmalinem-i-brylka-tygrysiego-oka/'),
+    '/product/regulowana-bransoletka-z-turmalinem-i-brylka-tygrysiego-oka',
+  );
   assert.equal(resolveLegacyRedirect('/'), null);
   assert.equal(resolveLegacyRedirect('/%E0%A4%A'), null);
 });

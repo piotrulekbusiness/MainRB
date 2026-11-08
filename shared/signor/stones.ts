@@ -127,6 +127,81 @@ export const STONES: Stone[] = [
       de: 'Der metallische Glanz von Hämatit erinnert an Stahl und harmoniert hervorragend mit einer Uhr. In unserem Sortiment ist er der Stein des Skorpions.',
     },
   },
+  {
+    id: 'cytryn',
+    slug: { pl: 'cytryn', de: 'citrin' },
+    name: { pl: 'Cytryn', de: 'Citrin' },
+    fromStone: { pl: 'z cytrynem', de: 'mit Citrin' },
+    match: { pl: ['cytryn'], de: ['citrin'] },
+    intro: {
+      pl: 'Cytryn to przejrzysty kamień w ciepłym, złocistym odcieniu.',
+      de: 'Citrin ist ein klarer Stein in einem warmen, goldenen Farbton.',
+    },
+    description: {
+      pl: 'Złocisty cytryn wyraźnie odcina się od czarnego onyksu i złotych przekładek. W naszej ofercie to kamień Wagi.',
+      de: 'Der goldene Citrin hebt sich deutlich vom schwarzen Onyx und den goldenen Zwischenperlen ab. In unserem Sortiment ist er der Stein der Waage.',
+    },
+  },
+  {
+    id: 'ametyst',
+    slug: { pl: 'ametyst', de: 'amethyst' },
+    name: { pl: 'Ametyst', de: 'Amethyst' },
+    fromStone: { pl: 'z ametystem', de: 'mit Amethyst' },
+    match: { pl: ['ametyst'], de: ['amethyst'] },
+    intro: {
+      pl: 'Ametyst to fioletowa odmiana kwarcu, jeden z najbardziej rozpoznawalnych kamieni naturalnych.',
+      de: 'Amethyst ist die violette Varietät des Quarzes und einer der bekanntesten Natursteine.',
+    },
+    description: {
+      pl: 'Fioletowy ametyst jest wyrazistym akcentem na tle czarnych koralików. W naszej ofercie to kamień Strzelca.',
+      de: 'Violetter Amethyst setzt einen kräftigen Akzent zwischen schwarzen Perlen. In unserem Sortiment ist er der Stein des Schützen.',
+    },
+  },
+  {
+    id: 'granat',
+    slug: { pl: 'granat', de: 'granat' },
+    name: { pl: 'Granat', de: 'Granat' },
+    fromStone: { pl: 'z granatem', de: 'mit Granat' },
+    match: { pl: ['granat'], de: ['granat'] },
+    intro: {
+      pl: 'Granat to kamień o głębokiej, ciemnoczerwonej barwie.',
+      de: 'Granat ist ein Stein mit tiefer, dunkelroter Farbe.',
+    },
+    description: {
+      pl: 'Ciemnoczerwony granat dodaje czarnej bransoletce ciepła, nie odbierając jej powagi. W naszej ofercie to kamień Koziorożca.',
+      de: 'Dunkelroter Granat gibt dem schwarzen Armband Wärme, ohne ihm die Strenge zu nehmen. In unserem Sortiment ist er der Stein des Steinbocks.',
+    },
+  },
+  {
+    id: 'turkus',
+    slug: { pl: 'turkus', de: 'tuerkis' },
+    name: { pl: 'Turkus', de: 'Türkis' },
+    fromStone: { pl: 'z turkusem', de: 'mit Türkis' },
+    match: { pl: ['turkus'], de: ['turkis', 'tuerkis'] },
+    intro: {
+      pl: 'Turkus to nieprzezroczysty kamień o charakterystycznej, niebieskozielonej barwie.',
+      de: 'Türkis ist ein undurchsichtiger Stein mit seiner typischen blaugrünen Farbe.',
+    },
+    description: {
+      pl: 'Niebieskozielony turkus przyciąga wzrok na tle matowego onyksu. W naszej ofercie to kamień Wodnika.',
+      de: 'Blaugrüner Türkis zieht auf mattem Onyx die Blicke auf sich. In unserem Sortiment ist er der Stein des Wassermanns.',
+    },
+  },
+  {
+    id: 'akwamaryn',
+    slug: { pl: 'akwamaryn', de: 'aquamarin' },
+    name: { pl: 'Akwamaryn', de: 'Aquamarin' },
+    fromStone: { pl: 'z akwamarynem', de: 'mit Aquamarin' },
+    match: { pl: ['akwamaryn'], de: ['aquamarin'] },
+    intro: {
+      pl: 'Akwamaryn to kamień o delikatnych, jasnoniebieskich odcieniach.',
+      de: 'Aquamarin ist ein Stein in zarten, hellblauen Tönen.',
+    },
+    description: {
+      pl: 'Jasnoniebieski akwamaryn łagodzi czerń bransoletki z onyksu. W naszej ofercie to kamień Ryb.',
+      de: 'Hellblauer Aquamarin mildert das Schwarz des Onyx-Armbands. In unserem Sortiment ist er der Stein der Fische.',
+    },
+  },
 ];
 
 export const findStoneBySlug = (market: Market, slug: string): Stone | undefined => STONES.find((stone) => stone.slug[market] === slug);

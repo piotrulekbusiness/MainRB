@@ -1,3 +1,5 @@
+> **Signor Store:** this repository is the headless frontend for signorstore.pl / signorstore.de, built on WooNuxt. Project-specific setup, PL/DE deployment, WordPress steps and redirects: see [docs/SIGNOR.md](docs/SIGNOR.md).
+
 ![full](https://user-images.githubusercontent.com/5116925/218879668-f4c1f9fd-bef4-44b0-bc7f-e87d994aa3a1.png)
 
 # Next Generation Front-End for WooCommerce
